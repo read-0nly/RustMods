@@ -1,8 +1,5 @@
 # Public Radio
-
 ## Become the madman raving over the airwaves you've always dreamt to be!
-
-The idea is thanks to Delanorix, with special thanks to Facepunch for making this so easy to do.
 
 Allows you to transmit audio over RF to be received and sent to connected speakers in the homes of your listeners. So by interacting with a microphone stand you can host radio shows, streaming audio over voip. Pirate radio at the end of the world really whips the llama's ass
 
@@ -21,3 +18,7 @@ To support more than 32 listeners (if you think you have that many), just use a 
 
 Please submit issues if you run into any. If you intend to use this on a server you actually care about, please spin off a testing server locally or something and test it there first. 
 This might have balance ramifications if someone finds a way to abuse the power transmission so it might only be appropriate for PVE servers
+
+
+
+The idea is thanks to Delanorix
