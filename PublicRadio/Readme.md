@@ -20,4 +20,4 @@ There's no broadcaster prioritization outside of the first one found on the freq
 To support more than 32 listeners (if you think you have that many), just use a splitter downstream of your microphone/radio to split the signal to as many broadcasters as you'd like.
 
 Please submit issues if you run into any. If you intend to use this on a server you actually care about, please spin off a testing server locally or something and test it there first. 
-This will likely have big balance ramifications so it might only be appropriate for PVE servers
+This might have balance ramifications if someone finds a way to abuse the power transmission so it might only be appropriate for PVE servers
