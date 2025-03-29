@@ -1,0 +1,34 @@
+/*
+BaseProjectile.
+	aimCone
+	aimSway
+	automatic
+	damageScale
+	internalBurstAimConeScale
+	internalBurstFireRateScale
+	internalBurstRecoilScale
+	primaryMagazine.capacity
+	primaryMagazine.definition.ammoTypes
+	projectileVelocityScale
+	distanceScale
+	isBurstWeapon
+	stancePenaltyScale
+
+TimedExplosive
+	minExplosionRadius
+	explosionRadius
+	timerAmountMax
+	timerAmountMin
+	
+BaseMelee
+	gathering
+		Flesh
+			conditionLost
+			destroyFraction
+			gatherDamage
+		Ore
+		ProduceHeadItem
+		Tree
+	maxDistance
+	attackRadius
+*/
