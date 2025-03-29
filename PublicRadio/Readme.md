@@ -19,6 +19,15 @@ To support more than 32 listeners (if you think you have that many), just use a 
 Please submit issues if you run into any. If you intend to use this on a server you actually care about, please spin off a testing server locally or something and test it there first. 
 This might have balance ramifications if someone finds a way to abuse the power transmission so it might only be appropriate for PVE servers
 
+Minimal Broadcaster circuit:
+![image](https://github.com/user-attachments/assets/e412ea10-dcb8-46de-887c-180253c29709)
+
+Theoretical microphone broadcaster setup:
+![image](https://github.com/user-attachments/assets/85975055-0354-495a-8ce2-76d94d52aee1)
+
+Minimal Receiver:
+![image](https://github.com/user-attachments/assets/f5ce3ff3-8e0b-478d-99ed-49893e4e9a6c)
+
 
 
 The idea is thanks to Delanorix
