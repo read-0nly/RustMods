@@ -137,14 +137,10 @@ namespace Oxide.Plugins
 				}
 				Puts(j.ToString());
 				if(j < tx.outputs.Length){
-					if(disconnectReceiver(rx,tx, true)){
-						tx.ConnectTo(rx,j,0);
-						tx.ensureOutputsUpdated =true;
-						tx.UpdateOutputs();
-						rx.SetFlag(BaseEntity.Flags.On, true);
-						NextFrame(()=>{rx.MarkDirty();});
-						//Puts("Connected tx");
-					}
+					disconnectReceiver(rx,tx, true)
+					tx.ConnectTo(rx,j,0);
+					tx.ensureOutputsUpdated =true;
+					tx.UpdateOutputs();
 					playSpeakers(rx,8);
 					//Puts("Connected");
 					break;
