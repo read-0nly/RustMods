@@ -44,12 +44,16 @@ namespace Oxide.Plugins
 			//Disconnect based on flag
 			if(flag){
 				Puts("Disconnecting");
+				IOEntity ioent = rx.inputs[0].connectedTo.ioEnt;
 				rx.Disconnect(0,true);
 				rx.SetFlag(global::BaseEntity.Flags.On,false);
 				rx.ensureOutputsUpdated =true;
 				rx.UpdateOutputs();
 				rx.MarkDirty();
 				rx.SendNetworkUpdateImmediate(false);
+				ioent.ensureOutputsUpdated =true;
+				ioent.UpdateOutputs();//
+				ioent.MarkDirty();
 				return true;
 			}
 			//Not disconnected.
