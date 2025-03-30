@@ -20,7 +20,7 @@ using Oxide.Core;
 namespace Oxide.Plugins
 {
 	[Info("Ninjutsu", "obsol", "0.1.1")]
-	[Description("Server debugging tool for modders")]
+	[Description("Make a focus stone by tossing the appropriate recipe into a fire, gesture while holding to trigger effects")]
 	public class Ninjutsu : CovalencePlugin
 	{
 		#region Variables
