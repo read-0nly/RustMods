@@ -36,7 +36,7 @@ namespace Oxide.Plugins
 	*/
     internal class COBALTOS : CovalencePlugin
     {
-			
+		public static COBALTOS instance;
 		#region AdminOS
 		string AdminOSString = @"				
 [	
@@ -236,7 +236,7 @@ TERMINAL CONNECTED"",
 		private Plugin GUIShop;
 			
 		public delegate void RunCommand(BasePlayer bp, ComputerStation cs);
-				
+		
 		public static void AddPhone(ComputerStation cs){
 			Vector3 spawnspot = cs.transform.TransformPoint(new Vector3(-0.6f,0.73f,0.1f));
 			ConVar.Entity.EntitySpawnRequest spawnEntityFromName = ConVar.Entity.GetSpawnEntityFromName("telephone");
@@ -245,37 +245,69 @@ TERMINAL CONNECTED"",
 			sm.Spawn();
 			sm.SetParent(cs,true);
 			sm.pickup.enabled = false;
+			
 			Console.WriteLine("Spawned SM?");
-		}
-		Dictionary<RunCommand,float> CommandTapeSpawnrates = new Dictionary<RunCommand,float>();
-		Dictionary<string,float> PanelTapeSpawnrates = new Dictionary<string,float>();
-		
-		Dictionary<Item,RunCommand> CommandTapes = new Dictionary<Item,RunCommand>();
-		Dictionary<Item,string> PanelTapes = new Dictionary<Item,string>();
-		
-		private bool AddPanelTape(Item cassette, string panel){
 			
 		}
-		private bool AddCommandTape(Item cassette, RunCommand command){
-			
-		}
+		Dictionary<RunCommand,float> CommandTapeItemspawnrates = new Dictionary<RunCommand,float>();
+		Dictionary<string,float> PanelTapesItemspawnrates = new Dictionary<string,float>();
 		
+		Dictionary<string,RunCommand> CommandTapes = new Dictionary<string,RunCommand>();
+		Dictionary<string,string> PanelTapes = new Dictionary<string,string>();
+		
+		private void Loaded(){
+			CommandTapeItemspawnrates.Add(ShowGUIShop,1);
+			PanelTapesItemspawnrates.Add(AdminOSString,1);
+			CommandTapes.Add("eBay",ShowGUIShop);
+			PanelTapes.Add("COBALTOS",AdminOSString);
+			instance=this;
+		}
 		public void ShowGUIShop(BasePlayer bp, ComputerStation cs){
 			if(GUIShop!=null){
 				GUIShop.Call("ShowGUIShops", bp, "Component");
 			}
 		}
+		
+		void OnEntitySpawned(ComputerStation entity)
+		{
+			if(entity.gameObject.GetComponentInChildren<Telephone>()==null){
+				AddPhone(entity);
+			}
+		}
+		
+		public bool AddPanelTape(string name, string panel, float spawnrate){
+			if(!PanelTapes.ContainsKey(name)){
+				PanelTapes.Add(name,panel);
+				PanelTapesItemspawnrates.Add(panel,spawnrate);
+			}
+			return false;
+		}
+		public bool AddCommandTape(string name, RunCommand panel, float spawnrate){
+			if(!CommandTapes.ContainsKey(name)){
+				CommandTapes.Add(name,panel);
+				CommandTapeItemspawnrates.Add(panel,spawnrate);
+			}
+			return false;
+		}
+		
 		object OnLootSpawn(LootContainer container)
 		{
-			foreach(string s in PanelTapeSpawnrates.Keys){
-				if(UnityEngine.Random.Range(0f,1f)<PanelTapeSpawnrates[s]){
+			foreach(string s in PanelTapes.Keys){
+				if(UnityEngine.Random.Range(0f,1f)<PanelTapesItemspawnrates[PanelTapes[s]]){
 					Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
-					cassetteItem.text = "DATATAPE";
-					basePlayer.GiveItem(cassetteItem);
-					PanelTapes.Add(cassetteItem,AdminOSString);
+					cassetteItem.name+=":"+s;
+					cassetteItem.text = s;
+					container.inventory.GiveItem(cassetteItem);
 				}
 			}
-			Puts("OnLootSpawn works!");
+			foreach(string s in CommandTapes.Keys){
+				if(UnityEngine.Random.Range(0f,1f)<CommandTapeItemspawnrates[CommandTapes[s]]){
+					Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
+					cassetteItem.text = s;
+					cassetteItem.name+=":"+s;
+					container.inventory.GiveItem(cassetteItem);
+				}
+			}
 			return null;
 		}
         [Command("GiveAdminTape")]
@@ -287,9 +319,8 @@ TERMINAL CONNECTED"",
 			}
 			Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
 			cassetteItem.text = "-- TOP SECRET --";
+			cassetteItem.name+=":"+"COBALTOS";
 			basePlayer.GiveItem(cassetteItem);
-			if(!PanelTapeSpawnrates.ContainsKey(AdminOSString)){PanelTapeSpawnrates.Add(AdminOSString,0.5f);}
-			PanelTapes.Add(cassetteItem,AdminOSString);
 		}
         [Command("GiveEbayTape")]
         private void GiveEbayTape(IPlayer player, string cmd, string[] args)
@@ -301,8 +332,7 @@ TERMINAL CONNECTED"",
 			Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
 			cassetteItem.text = "eBay";
 			basePlayer.GiveItem(cassetteItem);
-			
-			CommandTapes.Add(cassetteItem,ShowGUIShop);
+			cassetteItem.name+=":"+"eBay";
 		}
 		
 		System.Object OnEntityMounted(ComputerStation cs ,BasePlayer player){
@@ -322,18 +352,22 @@ TERMINAL CONNECTED"",
 				Puts("No tape");
 				return null;
 			}
-			if(CommandTapes.ContainsKey(i)){
-				CommandTapes[i](player,cs);
-				return null;
+			string[] keyArr = i.name.Split(":");
+			string key = "";
+			if(keyArr.Length>0){
+				key=keyArr[1];
 			}
-			if(PanelTapes.ContainsKey(i)){
-				CommunityEntity.ServerInstance.ClientRPC<string>(RpcTarget.Player("AddUI", player.Connection),(PanelTapes[i]));
-				return null;
+			
+			if(CommandTapes.ContainsKey(key)){
+				CommandTapes[key](player,cs);
+				cs.SetFlag(global::BaseEntity.Flags.On, false, false, true);
+				return cs;
 			}
-			Cassette cassette = (i.info.itemMods[0] as ItemModAssociatedEntity<Cassette>).entityPrefab.GetEntity() as Cassette;
-			Puts((cassette.GetType()).ToString());
-			
-			
+			if(PanelTapes.ContainsKey(key)){
+				CommunityEntity.ServerInstance.ClientRPC<string>(RpcTarget.Player("AddUI", player.Connection),(PanelTapes[key]));
+				cs.SetFlag(global::BaseEntity.Flags.On, false, false, true);
+				return cs;
+			}
 			return null;
 			
 		}
