@@ -234,19 +234,29 @@ TERMINAL CONNECTED"",
 		#endregion
 		[PluginReference]
 		private Plugin GUIShop;
-			
+		private Dictionary<int,int> connections = new Dictionary<int,int>();
+		
 		public delegate void RunCommand(BasePlayer bp, ComputerStation cs);
 		
 		public static void AddPhone(ComputerStation cs){
 			Vector3 spawnspot = cs.transform.TransformPoint(new Vector3(-0.6f,0.73f,0.1f));
-			ConVar.Entity.EntitySpawnRequest spawnEntityFromName = ConVar.Entity.GetSpawnEntityFromName("telephone");
-			global::BaseEntity baseEntity = global::GameManager.server.CreateEntity(spawnEntityFromName.PrefabName, spawnspot,Quaternion.LookRotation(cs.transform.forward, Vector3.up), true);
-			Telephone sm = baseEntity as Telephone;
-			sm.Spawn();
+			Telephone sm = null;
+			List<Telephone> powerPlantCandidates = new List<Telephone>();
+			BaseEntity.Query.Server.GetInSphere(spawnspot, 3, powerPlantCandidates);
+			if(powerPlantCandidates.Count()>1){
+				sm=powerPlantCandidates[0];
+				Console.WriteLine("Found Phone");
+			}else{
+				ConVar.Entity.EntitySpawnRequest spawnEntityFromName = ConVar.Entity.GetSpawnEntityFromName("telephone");
+				BaseEntity baseEntity = global::GameManager.server.CreateEntity(spawnEntityFromName.PrefabName, spawnspot,Quaternion.LookRotation(cs.transform.forward, Vector3.up), true);
+				sm = baseEntity as Telephone;
+				sm.Spawn();
+				Console.WriteLine("Spawned Phone");
+			}
+			
 			sm.SetParent(cs,true);
 			sm.pickup.enabled = false;
 			
-			Console.WriteLine("Spawned SM?");
 			
 		}
 		Dictionary<RunCommand,float> CommandTapeItemspawnrates = new Dictionary<RunCommand,float>();
@@ -335,23 +345,48 @@ TERMINAL CONNECTED"",
 			cassetteItem.name+=":"+"eBay";
 		}
 		
-		System.Object OnEntityMounted(ComputerStation cs ,BasePlayer player){
-			DeployedRecorder recorder = cs.gameObject.GetComponentInChildren<DeployedRecorder>();
+		void OnEntityMounted(ComputerStation cs ,BasePlayer player){
+			Telephone phone = cs.gameObject.GetComponentInChildren<Telephone>();
+			if(phone==null){
+				return;
+			}
 			Item i = null;
-			if(recorder==null){
-				Puts("No tapedeck");
-				Telephone phone = cs.gameObject.GetComponentInChildren<Telephone>();
-				if(phone==null){
-					return null;
-				}
-				i = phone.inventory.GetSlot(0);
-			}else{
-				i = recorder.inventory.GetSlot(0);
+			i = phone.inventory.GetSlot(0);
+			if(i==null){
+				Puts("No tape, Connecting to last number");
+				i= GetRemoteCommand(phone);
 			}
 			if(i==null){
-				Puts("No tape");
-				return null;
+				Puts("No tape found");
+				return;
 			}
+			RunTape(i, player, cs);//
+		}
+		void OnPhoneDialTimeout(PhoneController pc, PhoneController activeCallTo, BasePlayer currentPlayer){
+			if(connections.ContainsKey(pc.PhoneNumber)){
+				connections[pc.PhoneNumber]=pc.lastDialedNumber;//
+			}else{
+				connections.Add(pc.PhoneNumber,pc.lastDialedNumber);
+			}
+			Puts("Connecting to "+activeCallTo.lastDialedNumber);
+			Puts("Connecting to "+pc.lastDialedNumber);
+		}
+		Item GetRemoteCommand(Telephone phone){
+			Item i = null;
+			if(connections.ContainsKey(phone.Controller.PhoneNumber)){				
+				PhoneController target = TelephoneManager.GetTelephone(connections[phone.Controller.PhoneNumber]);
+				if(target==null){return null;}
+				Puts(target.PhoneNumber.ToString());
+				Telephone remotePhone = target.ParentEntity as Telephone;
+				if(remotePhone!=null){
+					i = remotePhone.inventory.GetSlot(0);
+				}
+			}
+			
+			return i;
+		}
+		
+		bool RunTape(Item i, BasePlayer player, ComputerStation cs){
 			string[] keyArr = i.name.Split(":");
 			string key = "";
 			if(keyArr.Length>0){
@@ -361,15 +396,14 @@ TERMINAL CONNECTED"",
 			if(CommandTapes.ContainsKey(key)){
 				CommandTapes[key](player,cs);
 				cs.SetFlag(global::BaseEntity.Flags.On, false, false, true);
-				return cs;
+				return true;
 			}
 			if(PanelTapes.ContainsKey(key)){
 				CommunityEntity.ServerInstance.ClientRPC<string>(RpcTarget.Player("AddUI", player.Connection),(PanelTapes[key]));
 				cs.SetFlag(global::BaseEntity.Flags.On, false, false, true);
-				return cs;
+				return true;
 			}
-			return null;
-			
+			return false;
 		}
 		//Interface.CallHook("OnBookmarkAdd", this, player, text) != null)
 		//System.Object OnBookmarkAdd(ComputerStation cs, BasePlayer player,string text=""){

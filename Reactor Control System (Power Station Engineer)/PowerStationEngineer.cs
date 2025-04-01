@@ -895,6 +895,7 @@ TERMINAL CONNECTED"",
 			}else{
 				spawnPC(spawnspot);
 			}
+			
 			spawnspot = mi.transform.TransformPoint(new Vector3(-34.87f, 12.25f, 7.62f));
 			List<ElectricGenerator> powerGenCandidates = new List<ElectricGenerator>();
 			BaseEntity.Query.Server.GetInSphere(spawnspot, 3, powerGenCandidates);
@@ -904,6 +905,7 @@ TERMINAL CONNECTED"",
 			}else{
 				spawnPower(spawnspot);
 			}
+			
 			Telephone tele = stationComputer.gameObject.GetComponentInChildren<Telephone>();
 			if(tele==null){Puts("No phone");return;}
 			stationGenerator.ConnectTo(tele,1,0);
