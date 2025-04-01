@@ -6,19 +6,6 @@
   - Skilltree
   - Billboard
 
-## Power station
-  - Values to keep in line
-    - Temperature
-    - Pressure
-    - Output
-  - How to keep them in line
-    - Pump
-    - Control rods
-
-   -  Timers control power into huge battery and out
-   -  If batteries are empty, take damage
-   -  damage reduces over time
-   -  damage over half translates to radiation 
 
 ## Airfield
 
