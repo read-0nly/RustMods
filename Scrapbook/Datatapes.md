@@ -6,6 +6,14 @@ Smartswitch controller
   - Find switches in build auth/monument
 Login portal
   - Requires username/password written on tape, then bounces dial to other server
+Link Server
+  - list contacts for redirect
+```
+login > Link + Service
+             + login > service
+             + Service
+    
+```
 Monuments have terminals with no datatapes but contacts
 Some monument servers know doors, only these are valid for smartswitch controller
 
