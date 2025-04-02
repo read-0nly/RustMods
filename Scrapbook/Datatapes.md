@@ -24,12 +24,13 @@ Some monument servers know doors, only these are valid for smartswitch controlle
 
 
 Basic flow
-Restore power station to power the other monuments. Power station has backup gas power
-Reactivate satellite to allow map data
-Manage water treatment plant to enable water connections
-Ferry gives cargo state
-Airfield gives monument aggro
+- Restore power station to power the other monuments. Power station has backup gas power
+- Reactivate satellite to allow map data
+- Manage water treatment plant to enable water connections
+- Ferry gives cargo state
+- Airfield gives monument aggro
 
+```
     Airfield
     Bandit Camp
     Harbor
@@ -48,3 +49,4 @@ Airfield gives monument aggro
     Train Yard
     Train Tunnel Network
     Water Treatment Plant
+```
