@@ -1,11 +1,15 @@
 Plant outcome calculator
   - Set genes of grid, calculate outcome
+ 
 Map app
   - Just a map. Requires satcomm restoration
+
 Smartswitch controller
   - Find switches in build auth/monument
+    
 Login portal
   - Requires username/password written on tape, then bounces dial to other server
+    
 Link Server
   - list contacts for redirect
 ```
