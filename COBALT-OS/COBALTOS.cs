@@ -37,226 +37,109 @@ namespace Oxide.Plugins
     internal class COBALTOS : CovalencePlugin
     {
 		public static COBALTOS instance;
-		#region AdminOS
-		string AdminOSString = @"				
-[	
-	{
-		""name"": ""TestPanel776"",
-		""parent"": ""Overlay"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Image"",
-				""imagetype"": ""Tiled"",
-				""color"": ""0.0255 0.026 0.03 1.0"",
-			},
-			{
-				""type"":""RectTransform"",
-				""anchormin"": ""0.1 0.08"",
-				""anchormax"": ""0.9 0.9""
-			},
-			{
-				""type"":""NeedsCursor""
-			}
-		]
-	},
-	{
-		""parent"": ""TestPanel776"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Text"",
-				""color"": ""0.2 0.5 0.7 1"",
-				""text"":""COBALT-OS"",
-				""align"": ""MiddleCenter"",
-				""fontSize"":40,
-				""font"":""DroidSansMono.ttf""
-			},
-			{
-				""type"":""RectTransform"",
-				""anchormin"": ""0.1 0.85"",
-				""anchormax"": ""0.9 0.95""
-			}
-		]
-	},
-	{
-		""parent"": ""TestPanel776"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Text"",
-				""color"": ""0.2 0.5 0.7 1"",
-				""text"":""Version:0.5.7.14(ADMIN UNLOCKED)
-COBALT TECHNOLOGIES
-
-TERMINAL CONNECTED"",
-				""align"": ""MiddleCenter"",
-				""fontSize"":20,
-				""font"":""DroidSansMono.ttf""
-			},
-			{
-				""type"":""RectTransform"",
-				""anchormin"": ""0.1 0.65"",
-				""anchormax"": ""0.9 0.85""
-			}
-		]
-	},
-	{
-		""name"": ""Button8119"",
-		""parent"": ""TestPanel776"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Button"",
-				""command"":""quit"",
-				""close"":""TestPanel776"",
-				""color"": ""0.05 0.08 0.13 1"",
-				""imagetype"": ""Tiled""
-			},
-			{
-				""type"":""RectTransform"",
-				""anchormin"": ""0.3 0.44"",
-				""anchormax"": ""0.7 0.49""
-			}
-		]
-	},
-	{
-		""parent"": ""Button8119"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Text"",
-				""color"": ""0.2 0.5 0.7 1"",
-				""font"":""DroidSansMono.ttf"",
-				""text"":""END SIMULATION"",
-				""align"": ""MiddleCenter""
-			}
-		]
-	},
-	{
-		""name"": ""Button8114"",
-		""parent"": ""TestPanel776"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Button"",
-				""command"":""env.time 0"",
-				""close"":""TestPanel776"",
-				""color"": ""0.05 0.08 0.13 1"",
-				""imagetype"": ""Tiled""
-			},
-			{
-				""type"":""RectTransform"",
-				""anchormin"": ""0.3 0.32"",
-				""anchormax"": ""0.7 0.37""
-			}
-		]
-	},
-	{
-		""parent"": ""Button8114"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Text"",
-				""color"": ""0.2 0.5 0.7 1"",
-				""font"":""DroidSansMono.ttf"",
-				""text"":""Night"",
-				""align"": ""MiddleCenter""
-			}
-		]
-	},
-	{
-		""name"": ""Button8112"",
-		""parent"": ""TestPanel776"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Button"",
-				""command"":""env.time 12"",
-				""close"":""TestPanel776"",
-				""color"": ""0.05 0.08 0.13 1"",
-				""imagetype"": ""Tiled""
-			},
-			{
-				""type"":""RectTransform"",
-				""anchormin"": ""0.3 0.26"",
-				""anchormax"": ""0.7 0.31""
-			}
-		]
-	},
-	{
-		""parent"": ""Button8112"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Text"",
-				""color"": ""0.2 0.5 0.7 1"",
-				""font"":""DroidSansMono.ttf"",
-				""text"":""Day"",
-				""align"": ""MiddleCenter""
-			}
-		]
-	},
-	{
-		""name"": ""Button88"",
-		""parent"": ""TestPanel776"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Button"",
-				""close"":""TestPanel776"",
-				""color"": ""0.05 0.08 0.13 1"",
-				""imagetype"": ""Tiled""
-			},
-			{
-				""type"":""RectTransform"",
-				""anchormin"": ""0.3 0.15"",
-				""anchormax"": ""0.7 0.2""
-			}
-		]
-	},
-	{
-		""parent"": ""Button88"",
-		""components"":
-		[
-			{
-				""type"":""UnityEngine.UI.Text"",
-				""color"": ""0.2 0.5 0.7 1"",
-				""font"":""DroidSansMono.ttf"",
-				""fontsize"":20,
-				""text"":""CLOSE"",
-				""align"": ""MiddleCenter""
-			}
-		]
-	}
-]
-";
-		#endregion
-		[PluginReference]
-		private Plugin GUIShop;
 		private Dictionary<int,int> connections = new Dictionary<int,int>();
 		
-		public delegate void RunCommand(BasePlayer bp, ComputerStation cs);
+		public ConfigData config;
+
+		public static Dictionary<ComputerStation,Telephone> ComputerPhones = new Dictionary<ComputerStation,Telephone>();
+
+		public class ConfigData
+		{
+			[JsonProperty("ComputerPhones", ObjectCreationHandling = ObjectCreationHandling.Replace)]			
+			public Dictionary<ulong,ulong> ComputerPhones = new Dictionary<ulong,ulong>();
+			
+			[JsonProperty("version", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+			public Oxide.Core.VersionNumber Version = default(VersionNumber);
+		}
+		protected override void LoadConfig()
+		{
+			base.LoadConfig();
+			try
+			{
+				config = Config.ReadObject<ConfigData>();
+				if (config == null)
+				{
+					LoadDefaultConfig();
+				}
+			}
+			catch (Exception ex)
+			{
+				PrintError($"The configuration file is corrupted or missing. \n{ex}");
+				LoadDefaultConfig();
+			}
+			SaveConfig();
+        }
+
+		protected override void LoadDefaultConfig()
+		{
+			Puts("Version mismatch for config");
+			config = new ConfigData();
+			config.Version = Version;
+		}
+
+		protected override void SaveConfig()
+		{
+			Config.WriteObject(config);
+		}
+
+		public delegate void RunCommand(BasePlayer bp, ComputerStation cs, Telephone tn);
 		
-		public static void AddPhone(ComputerStation cs){
+		public void EnumerateLinks(){
+			
+			foreach(ulong u in config.ComputerPhones.Keys){
+				Puts("["+u+" : "+config.ComputerPhones[u]+"]");
+			}
+		}
+		void OnServerSave(){
+			Puts("Saving");
+			EnumerateLinks();
+			SaveConfig();
+		}
+		void OnNewSave(string filename)
+		{
+			LoadConfig();
+			config.ComputerPhones = new Dictionary<ulong,ulong>();
+			SaveConfig();
+			Puts("OnNewSave works!");
+		}
+		public static Telephone AddPhone(ComputerStation cs){
 			Vector3 spawnspot = cs.transform.TransformPoint(new Vector3(-0.6f,0.73f,0.1f));
 			Telephone sm = null;
-			List<Telephone> powerPlantCandidates = new List<Telephone>();
-			BaseEntity.Query.Server.GetInSphere(spawnspot, 3, powerPlantCandidates);
-			if(powerPlantCandidates.Count()>1){
-				sm=powerPlantCandidates[0];
-				Console.WriteLine("Found Phone");
-			}else{
-				ConVar.Entity.EntitySpawnRequest spawnEntityFromName = ConVar.Entity.GetSpawnEntityFromName("telephone");
-				BaseEntity baseEntity = global::GameManager.server.CreateEntity(spawnEntityFromName.PrefabName, spawnspot,Quaternion.LookRotation(cs.transform.forward, Vector3.up), true);
-				sm = baseEntity as Telephone;
-				sm.Spawn();
-				Console.WriteLine("Spawned Phone");
+			if(instance.config.ComputerPhones.ContainsKey(cs.net.ID.Value)){
+				sm = BaseNetworkable.serverEntities.Find(new NetworkableId(instance.config.ComputerPhones[cs.net.ID.Value])) as Telephone;
+					Console.WriteLine("Found Phone by cache");
 			}
-			
+			if(sm==null){
+				List<Telephone> powerPlantCandidates = new List<Telephone>();
+				BaseEntity.Query.Server.GetInSphere(spawnspot, 3, powerPlantCandidates);
+				
+				if(powerPlantCandidates.Count()>1){
+					sm=powerPlantCandidates[0];
+					sm.SetParent(cs,true);
+					Console.WriteLine("Found Phone");
+				}else{
+					ConVar.Entity.EntitySpawnRequest spawnEntityFromName = ConVar.Entity.GetSpawnEntityFromName("telephone");
+					BaseEntity baseEntity = global::GameManager.server.CreateEntity(spawnEntityFromName.PrefabName, spawnspot,Quaternion.LookRotation(cs.transform.forward, Vector3.up), true);
+					sm = baseEntity as Telephone;
+					sm.Spawn();
+					Console.WriteLine("Spawned Phone");
+				}
+				if(instance.config.ComputerPhones.ContainsKey(cs.net.ID.Value)){
+					instance.config.ComputerPhones[cs.net.ID.Value]=sm.net.ID.Value;
+				}
+				else{
+					instance.config.ComputerPhones.Add(cs.net.ID.Value,sm.net.ID.Value);
+				}
+			}
 			sm.SetParent(cs,true);
 			sm.pickup.enabled = false;
-			
+			if(ComputerPhones.ContainsKey(cs)){
+				ComputerPhones[cs]=sm;
+			}
+			else{
+				ComputerPhones.Add(cs,sm);
+			}
+			return sm;
 			
 		}
 		Dictionary<RunCommand,float> CommandTapeItemspawnrates = new Dictionary<RunCommand,float>();
@@ -266,101 +149,109 @@ TERMINAL CONNECTED"",
 		Dictionary<string,string> PanelTapes = new Dictionary<string,string>();
 		
 		private void Loaded(){
-			CommandTapeItemspawnrates.Add(ShowGUIShop,1);
-			PanelTapesItemspawnrates.Add(AdminOSString,1);
-			CommandTapes.Add("eBay",ShowGUIShop);
-			PanelTapes.Add("COBALTOS",AdminOSString);
 			instance=this;
-		}
-		public void ShowGUIShop(BasePlayer bp, ComputerStation cs){
-			if(GUIShop!=null){
-				GUIShop.Call("ShowGUIShops", bp, "Component");
+			LoadConfig();
+			foreach(ulong key in config.ComputerPhones.Keys){
+				ComputerStation cs = BaseNetworkable.serverEntities.Find(new NetworkableId(key)) as ComputerStation;
+				Telephone sm = BaseNetworkable.serverEntities.Find(new NetworkableId(config.ComputerPhones[key])) as Telephone;
+				if(cs==null||sm==null){
+					continue;
+				}
+				ComputerPhones.Add(cs,sm);
 			}
 		}
-		
+		private void Unload(){
+			Puts("Saving");
+			EnumerateLinks();
+			SaveConfig();
+		}
+		void OnEntitySpawned(Telephone sm)
+		{
+			GroundWatch gw = sm.GetComponent<GroundWatch>();
+			if(gw!=null){
+				Puts("Deleting GroundWatch");
+				UnityEngine.Object.Destroy(gw);
+			}
+			
+		}
 		void OnEntitySpawned(ComputerStation entity)
 		{
 			if(entity.gameObject.GetComponentInChildren<Telephone>()==null){
-				AddPhone(entity);
+				timer.Once(1f,()=>{
+					Telephone sm = AddPhone(entity);
+					EnumerateLinks();
+					});
+				Puts("Station ID:"+entity.net.ID);
 			}
 		}
 		
 		public bool AddPanelTape(string name, string panel, float spawnrate){
-			if(!PanelTapes.ContainsKey(name)){
-				PanelTapes.Add(name,panel);
-				PanelTapesItemspawnrates.Add(panel,spawnrate);
+			if(PanelTapes.ContainsKey(name)){
+				PanelTapes.Remove(name);
 			}
+			PanelTapes.Add(name,panel);
+			PanelTapesItemspawnrates.Add(panel,spawnrate);
+			
 			return false;
 		}
 		public bool AddCommandTape(string name, RunCommand panel, float spawnrate){
-			if(!CommandTapes.ContainsKey(name)){
-				CommandTapes.Add(name,panel);
-				CommandTapeItemspawnrates.Add(panel,spawnrate);
+			if(CommandTapes.ContainsKey(name)){
+				CommandTapes.Remove(name);
 			}
+			CommandTapes.Add(name,panel);
+			CommandTapeItemspawnrates.Add(panel,spawnrate);
 			return false;
 		}
 		
 		object OnLootSpawn(LootContainer container)
 		{
 			foreach(string s in PanelTapes.Keys){
-				if(UnityEngine.Random.Range(0f,1f)<PanelTapesItemspawnrates[PanelTapes[s]]){
-					Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
-					cassetteItem.name+=":"+s;
-					cassetteItem.text = s;
-					container.inventory.GiveItem(cassetteItem);
+				if(PanelTapesItemspawnrates.ContainsKey(PanelTapes[s])){
+					if(UnityEngine.Random.Range(0f,1f)<PanelTapesItemspawnrates[PanelTapes[s]]){
+						Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
+						cassetteItem.name=s;
+						cassetteItem.text = s;
+						container.inventory.GiveItem(cassetteItem);
+					}
 				}
 			}
 			foreach(string s in CommandTapes.Keys){
-				if(UnityEngine.Random.Range(0f,1f)<CommandTapeItemspawnrates[CommandTapes[s]]){
-					Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
-					cassetteItem.text = s;
-					cassetteItem.name+=":"+s;
-					container.inventory.GiveItem(cassetteItem);
+				if(CommandTapeItemspawnrates.ContainsKey(CommandTapes[s])){
+					if(UnityEngine.Random.Range(0f,1f)<CommandTapeItemspawnrates[CommandTapes[s]]){
+						Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
+						cassetteItem.text = s;
+						cassetteItem.name=s;
+						container.inventory.GiveItem(cassetteItem);
+					}
 				}
 			}
 			return null;
 		}
-        [Command("GiveAdminTape")]
-        private void GiveSpawnTape(IPlayer player, string cmd, string[] args)
+        [Command("GiveTape")]
+        private void GiveTape(IPlayer player, string cmd, string[] args)
         {			
             BasePlayer basePlayer = player.Object as BasePlayer;
 			if(basePlayer==null){
 				return;
 			}
-			Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
-			cassetteItem.text = "-- TOP SECRET --";
-			cassetteItem.name+=":"+"COBALTOS";
-			basePlayer.GiveItem(cassetteItem);
-		}
-        [Command("GiveEbayTape")]
-        private void GiveEbayTape(IPlayer player, string cmd, string[] args)
-        {			
-            BasePlayer basePlayer = player.Object as BasePlayer;
-			if(basePlayer==null){
+			if(args.Length==0){
+				return;
+			}
+			if(!PanelTapes.ContainsKey(args[0])&&!CommandTapes.ContainsKey(args[0])){
 				return;
 			}
 			Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
-			cassetteItem.text = "eBay";
+			cassetteItem.text = args[0];
+			cassetteItem.name+=args[0];
 			basePlayer.GiveItem(cassetteItem);
-			cassetteItem.name+=":"+"eBay";
 		}
-		
+        
 		void OnEntityMounted(ComputerStation cs ,BasePlayer player){
 			Telephone phone = cs.gameObject.GetComponentInChildren<Telephone>();
-			if(phone==null){
-				return;
-			}
+			Telephone remotePhone= GetRemotePhone(phone);
 			Item i = null;
-			i = phone.inventory.GetSlot(0);
-			if(i==null){
-				Puts("No tape, Connecting to last number");
-				i= GetRemoteCommand(phone);
-			}
-			if(i==null){
-				Puts("No tape found");
-				return;
-			}
-			RunTape(i, player, cs);//
+			Telephone target = FindTape(phone,remotePhone, cs ,player, out i);
+			RunTape(i, player, cs, target);//
 		}
 		void OnPhoneDialTimeout(PhoneController pc, PhoneController activeCallTo, BasePlayer currentPlayer){
 			if(connections.ContainsKey(pc.PhoneNumber)){
@@ -368,37 +259,116 @@ TERMINAL CONNECTED"",
 			}else{
 				connections.Add(pc.PhoneNumber,pc.lastDialedNumber);
 			}
-			Puts("Connecting to "+activeCallTo.lastDialedNumber);
-			Puts("Connecting to "+pc.lastDialedNumber);
+			Puts("Connecting to "+activeCallTo.lastDialedNumber+" from "+pc.lastDialedNumber);
 		}
-		Item GetRemoteCommand(Telephone phone){
-			Item i = null;
-			if(connections.ContainsKey(phone.Controller.PhoneNumber)){				
+		Telephone GetRemotePhone(Telephone phone){
+			if(connections.ContainsKey(phone.Controller.PhoneNumber)){	
+				Puts("found connection");			
 				PhoneController target = TelephoneManager.GetTelephone(connections[phone.Controller.PhoneNumber]);
 				if(target==null){return null;}
 				Puts(target.PhoneNumber.ToString());
-				Telephone remotePhone = target.ParentEntity as Telephone;
+				return target.ParentEntity as Telephone;
+			}
+			Puts("no connection");			
+			return null;
+		}
+			
+		Telephone FindTape(Telephone phone, Telephone remotePhone, ComputerStation cs ,BasePlayer player, out Item i){
+			Telephone result = phone;
+			if(phone==null){
+				i=null;
+				return result;
+			}
+			i = phone.inventory.GetSlot(0);
+			if(i==null){
 				if(remotePhone!=null){
 					i = remotePhone.inventory.GetSlot(0);
+					Puts("Remote tape found");
+					result = remotePhone;
 				}
 			}
-			
-			return i;
+			if(i==null){
+				Puts("No tape found");
+				return null;
+			}
+			Puts("Tape found");
+			return result;
 		}
 		
-		bool RunTape(Item i, BasePlayer player, ComputerStation cs){
-			string[] keyArr = i.name.Split(":");
-			string key = "";
-			if(keyArr.Length>0){
-				key=keyArr[1];
+		
+		public void RedirectConnection(ComputerStation cs, BasePlayer player, int phonenumber){
+			PhoneController target = TelephoneManager.GetTelephone(phonenumber);
+			//Puts("find "+phonenumber);
+			//Puts("Found target");
+			Telephone remotePhone = ComputerPhones[cs];
+			if(target!=null){
+				remotePhone = target.ParentEntity as Telephone;
+			}
+			connections[ComputerPhones[cs].Controller.PhoneNumber] = phonenumber;
+			Item i = null;
+			FindTape(ComputerPhones[cs],remotePhone, cs ,player, out i);
+			//Puts("Run tape "+i.name);
+			RunTape(i, player, cs, remotePhone);//
+		}
+		
+		[Command("ListTapes")]
+        private void ListTapes(IPlayer player, string cmd, string[] args)
+        {	
+			Puts("Command Tapes");
+			foreach(string s in CommandTapes.Keys){
+				Puts("  ["+s+"]");
+			}
+			Puts("Panel Tapes");
+			foreach(string s in PanelTapes.Keys){
+				Puts("  ["+s+"]");
+			}
+		}
+		[Command("RedirectConnection")]
+        private void RedirectConnection(IPlayer player, string cmd, string[] args)
+        {	
+			Puts("Redirecting?");
+            BasePlayer basePlayer = player.Object as BasePlayer;
+			if(basePlayer==null){
+				return;
+			}
+			//Puts("Has Baseplayer");
+			ComputerStation cs = basePlayer.GetMounted() as ComputerStation;
+			if(cs==null){return;}
+			//Puts("Has ComputerStation");
+			
+			int phonenumber=0;
+			if(args.Length==0 || !int.TryParse(args[0], out phonenumber)){return;}
+
+			if(args.Length>1 ){
+				CommunityEntity.ServerInstance.ClientRPC<string>(RpcTarget.Player("DestroyUI", basePlayer.Connection),args[1]);
 			}
 			
+			//Puts("Redirection");
+			RedirectConnection(cs,basePlayer,phonenumber);
+			
+		}
+		bool RunTape(Item i, BasePlayer player, ComputerStation cs, Telephone sm){
+			if(i==null){return false;}
+			string[] keyArr = i.name.Split(":");
+			string key = "";
+			Puts(i.name);
+			if(keyArr.Length>0){
+				for(int j = 0; j<keyArr.Length&&key=="";j++){
+					key=keyArr[j];
+				}
+			}else{
+				key=i.name;
+				}
+			
+			//Puts(key);
 			if(CommandTapes.ContainsKey(key)){
-				CommandTapes[key](player,cs);
+				//Puts("Running command");
+				CommandTapes[key](player,cs,sm);
 				cs.SetFlag(global::BaseEntity.Flags.On, false, false, true);
 				return true;
 			}
 			if(PanelTapes.ContainsKey(key)){
+				//Puts("Running panel");
 				CommunityEntity.ServerInstance.ClientRPC<string>(RpcTarget.Player("AddUI", player.Connection),(PanelTapes[key]));
 				cs.SetFlag(global::BaseEntity.Flags.On, false, false, true);
 				return true;

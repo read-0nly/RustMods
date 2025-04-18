@@ -27,7 +27,7 @@ namespace Oxide.Plugins
     [Description("Chatroom app for CobaltOS")]
     internal class COSChatRoom : CovalencePlugin
     {
-		///
+		/////
 		string mainPanel(){
 			Puts("send panel");
 			return @"
@@ -925,7 +925,7 @@ namespace Oxide.Plugins
 		public HashSet<BasePlayer> chatMembers = new HashSet<BasePlayer>();
 		
 		
-		public void showChat(BasePlayer basePlayer, ComputerStation cs=null){
+		public void showChat(BasePlayer basePlayer, ComputerStation cs=null, Telephone tele = null){
 			
 			ulong id = basePlayer.Connection.userid;
 			if(!nicknames.ContainsKey(id)){
@@ -935,7 +935,7 @@ namespace Oxide.Plugins
 			chatMembers.Add(basePlayer);
 			updateMessages();
 		}
-		
+		//BaseNetworkable.net.Value
 		[Command("BBSChatUsername")]
         private void BBSChatUsername(IPlayer player, string cmd, string[] args)
         {

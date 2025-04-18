@@ -66,7 +66,67 @@ namespace Oxide.Plugins
 		float flow_max = 1000;
 		float power_max = 1000;
 		
+		public ConfigData config;
+
+		public class ConfigData
+		{
+			[JsonProperty("ComputerStationID", ObjectCreationHandling = ObjectCreationHandling.Replace)]			
+			public ulong ComputerStationID = 0;
+			[JsonProperty("PhoneID", ObjectCreationHandling = ObjectCreationHandling.Replace)]			
+			public ulong PhoneID = 0;
+			[JsonProperty("GeneratorID", ObjectCreationHandling = ObjectCreationHandling.Replace)]			
+			public ulong GeneratorID = 0;
+			[JsonProperty("BroadcasterID", ObjectCreationHandling = ObjectCreationHandling.Replace)]			
+			public ulong BroadcasterID = 0;//
+			
+			[JsonProperty("version", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+			public Oxide.Core.VersionNumber Version = default(VersionNumber);
+		}
+		protected override void LoadConfig()
+		{
+			base.LoadConfig();
+			try
+			{
+				config = Config.ReadObject<ConfigData>();
+				if (config == null)
+				{
+					LoadDefaultConfig();
+				}
+			}
+			catch (Exception ex)
+			{
+				PrintError($"The configuration file is corrupted or missing. \n{ex}");
+				LoadDefaultConfig();
+			}
+			SaveConfig();
+        }
+
+		protected override void LoadDefaultConfig()
+		{
+			Puts("Version mismatch for config");
+			config = new ConfigData();
+			config.Version = Version;
+		}
+
+		protected override void SaveConfig()
+		{
+			Config.WriteObject(config);
+		}
 		
+		void OnServerSave(){
+			Puts("Saving");
+			SaveConfig();
+		}
+		void OnNewSave(string filename)
+		{
+			LoadConfig();
+			config.ComputerStationID = 0;		
+			config.PhoneID = 0;
+			config.GeneratorID = 0;	
+			config.BroadcasterID = 0;
+			SaveConfig();
+			Puts("OnNewSave works!");
+		}
 		#region mainPanel
 		string mainPanel=@"
 					
@@ -718,9 +778,9 @@ TERMINAL CONNECTED"",
 			foreach(BasePlayer bp in players){
 				CommunityEntity.ServerInstance.ClientRPC<string>(RpcTarget.Player("AddUI", bp.Connection),newPanel);
 			}
-				
+				//
 		}
-		private void ShowToPlayer(BasePlayer bp, ComputerStation cs=null){
+		private void ShowToPlayer(BasePlayer bp, ComputerStation cs=null, Telephone sm=null){
 			if(!players.Contains(bp)){
 				players.Add(bp);
 			}				
@@ -843,7 +903,7 @@ TERMINAL CONNECTED"",
 		
 		
 		void Loaded(){
-			COBALTOS.instance.AddCommandTape("Reactor Control System",ShowToPlayer,1f);
+			LoadConfig();//
 		}
 		void Unload(){//
 			Puts("Unloading");
@@ -853,6 +913,7 @@ TERMINAL CONNECTED"",
 					bp.Connection), "ReactorControlSystem2");
 				players.Remove(bp);
 			}
+			SaveConfig();
 		}
 		void OnServerInitialized(){//
 			/*foreach(GameObject go in Resources.FindObjectsOfTypeAll<GameObject>()){
@@ -876,6 +937,7 @@ TERMINAL CONNECTED"",
 				}
 			}
 			spawnParts();
+			COBALTOS.instance.AddCommandTape("Reactor Control System",ShowToPlayer,1f);
 			
 			
 			nucleationTimer=timer.Every(5f,()=>{
@@ -885,34 +947,71 @@ TERMINAL CONNECTED"",
 			});
 		}
 		void spawnParts(){
+						
+			
+			Puts("Computer ID:"+config.ComputerStationID.ToString());
+			Puts("Generator ID:"+config.GeneratorID.ToString());
+			
+			//Computer setup
+			stationComputer = BaseNetworkable.serverEntities.Find(new NetworkableId(config.ComputerStationID)) as ComputerStation;
+						
 			if(mi==null){return;}
 			Vector3 spawnspot = mi.transform.TransformPoint(new Vector3(-37.35f, 12.25f, 10.1f));
-			List<ComputerStation> powerPlantCandidates = new List<ComputerStation>();
-			BaseEntity.Query.Server.GetInSphere(spawnspot, 3, powerPlantCandidates);
-			if(powerPlantCandidates.Count()>1){
-				stationComputer=powerPlantCandidates[0];
-				Console.WriteLine("linke PowerCntrol?");///
+			if(stationComputer!=null){
+				Console.WriteLine("linked PowerCntrol?");///
 			}else{
 				spawnPC(spawnspot);
+				config.ComputerStationID = stationComputer.net.ID.Value;
+				Puts("Spawning ComputerStation");
 			}
+			GroundWatch gw = stationComputer.GetComponent<GroundWatch>();
+			
+			if(gw!=null){
+				Puts("Deleting GroundWatch");
+				UnityEngine.Object.Destroy(gw);
+			}
+			//generator setup
+			stationGenerator = BaseNetworkable.serverEntities.Find(new NetworkableId(config.GeneratorID)) as ElectricGenerator;
 			
 			spawnspot = mi.transform.TransformPoint(new Vector3(-34.87f, 12.25f, 7.62f));
-			List<ElectricGenerator> powerGenCandidates = new List<ElectricGenerator>();
-			BaseEntity.Query.Server.GetInSphere(spawnspot, 3, powerGenCandidates);
-			if(powerGenCandidates.Count()>1){
-				stationGenerator=powerGenCandidates[0];
+			if(stationGenerator!=null){
 				Console.WriteLine("linke gen?");////
 			}else{
 				spawnPower(spawnspot);
+				config.GeneratorID = stationGenerator.net.ID.Value;
+				Puts("Spawning ElectricGenerator");
+			}
+			gw = stationGenerator.GetComponent<GroundWatch>();
+			if(gw!=null){
+				Puts("Deleting GroundWatch");
+				UnityEngine.Object.Destroy(gw);
 			}
 			
-			Telephone tele = stationComputer.gameObject.GetComponentInChildren<Telephone>();
-			if(tele==null){Puts("No phone");return;}
-			stationGenerator.ConnectTo(tele,1,0);
+			
+			timer.Once(2f,()=>{
+				Telephone tele = stationComputer.gameObject.GetComponentInChildren<Telephone>();
+				if(tele==null){Puts("No phone");return;}
+				gw = tele.GetComponent<GroundWatch>();
+				if(gw!=null){
+					Puts("Deleting GroundWatch");
+					UnityEngine.Object.Destroy(gw);
+				}
+				Item cassetteItem = ItemManager.CreateByName("cassette", 1, 0UL);
+				cassetteItem.text = "Reactor Control System";
+				cassetteItem.name ="Reactor Control System";
+				tele.inventory.GiveItem(cassetteItem);
+				stationGenerator.ConnectTo(tele,1,0);
+			});
+			RFBroadcaster tx = BaseNetworkable.serverEntities.Find(new NetworkableId(config.BroadcasterID)) as RFBroadcaster;
+			if(tx==null){
+				tx=spawnBroadcaster(stationGenerator);
+				config.BroadcasterID=tx.net.ID.Value;
+				Puts("Spawning broadcaster");
+			}
+			tx.SetParent(stationGenerator,true);
+			stationGenerator.ConnectTo(tx,2,0);
 			stationGenerator.UpdateOutputs();
 			stationGenerator.MarkDirty();
-			RFBroadcaster tx = spawnBroadcaster(stationGenerator);
-			stationGenerator.ConnectTo(tx,2,0);
 			RFManager.ChangeFrequency(1, 333, tx, false);
 		}
 		void spawnPower(Vector3 spawnspot){			
