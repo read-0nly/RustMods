@@ -75,3 +75,4 @@ In this example, the selected point is the second point of the 2-point path X=1.
 - It might affect NPCs it shouldn't. In testing, everything seems to behave to me, but if you find cases where it's breaking NPCs let me know
 - Your NPC spawners need to be close to a navmesh. Not everything has a navmesh so it can take some guessing. The invisible collider does have navmesh, in a pinch.
 - The NPCs are wider and taller than they look, even if it looks like they'd fit you might need to give them more clearance when making the map
+- Try not to reload the plugin while the server is running - the initial startup takes a long time and all players will be kicked when it finishes and the server gets all the queued packets at once because the server thinks they're packetflooding.
