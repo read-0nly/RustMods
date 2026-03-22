@@ -48,6 +48,7 @@ I added an example config file to the repo. I recommend looking at it as well to
 ### Actually making functional paths and cover points
 The patrol points have to do double-duty. There used to be cover points but FP deleted them :(
 The logic of paths and cover and all that are encoded in the scale of the patrol point. I sueggest just looking at the demo map to understand what's going on.
+Place your NPC spawners near a point on the path you want them to walk to make sure they snap to that one. Try not giving a path more than 1 NPC otherwise they sometimes phase together. I have ideas on fixing that but it'll require custom AI states.
 
 #### Defining the zone
 All points contained within a monument marker belong to that monument. Patrol points outside of the monument marker will be ignored. Scale the monument marker to encompass all NPC spawners and patrol points
