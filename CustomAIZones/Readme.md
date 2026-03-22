@@ -70,5 +70,5 @@ In this example, the selected point is the second point of the 2-point path X=1.
 ## Bugs/considerations
 - Because of navmesh reasons the spawned NPC needs to be replaced with a modified NPC that I tinker with before spawning in. If you have other mods spawning in NPCs this can lead to NPC duplication. File an issue and give me the mod name and I'll look into a way of making them play nice together.
 - It might affect NPCs it shouldn't. In testing, everything seems to behave to me, but if you find cases where it's breaking NPCs let me know
-- Your NPC spawners need to be close to a navmesh. Not everything has a navmesh so it can take some guessing
+- Your NPC spawners need to be close to a navmesh. Not everything has a navmesh so it can take some guessing. The invisible collider does have navmesh, in a pinch.
 - The NPCs are wider and taller than they look, even if it looks like they'd fit you might need to give them more clearance when making the map
