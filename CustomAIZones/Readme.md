@@ -5,7 +5,7 @@ Download the file CustomAIZones.cs and pop it in the oxide plugins folder, ignor
 ### Before starting
 You need to use a specific prefab to add the patrol and cover points to your monuments. The prefab is assets/prefabs/npc/scientist/patrolpoint.prefab (for now, until facepunch deletes it and breaks the plugin lol)
 
-For that, you'll need to set this to true
+For that, you'll need to set this to true in your rustedit configuration.json file
 ```json
 "Prefabs": {
   "Show all prefabs (WARNING: Some prefabs may not work or break the editor/your map)": true
