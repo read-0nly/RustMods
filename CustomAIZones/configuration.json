@@ -1,0 +1,107 @@
+{
+  "AutoSave": {
+    "Enabled": false,
+    "Interval (minutes)": 15,
+    "Maximum Saves": 3
+  },
+  "Camera": {
+    "Fast Speed": 100.0,
+    "FOV": 70,
+    "Gizmo Position": "0.95 0.9",
+    "Invert Mouse": false,
+    "Speed": 10.0,
+    "View Distance": 2500
+  },
+  "Compass": {
+    "Enable Compass": true
+  },
+  "Discord": {
+    "Show status on Discord": true
+  },
+  "Graphics": {
+    "Ambient Occlusion": true,
+    "Anti-Aliasing Mode": 1,
+    "AutoExposure": true,
+    "Bloom": true,
+    "Climate System": true,
+    "Contact Shadows": true,
+    "Foliage Shadows": 1,
+    "Foliage System": true,
+    "Global Quality": 0,
+    "Grass Quality": 100,
+    "Light Shafts": false,
+    "Lower framerate when minimized": true,
+    "Mesh Quality": 100,
+    "Motion Blur": false,
+    "Occlusion Culling": false,
+    "Parallax Mapping": 2,
+    "Sharpen": true,
+    "Spatial Biome Fog": true,
+    "Target Frame Rate": 100,
+    "Vignette": true,
+    "Volume Effects": false,
+    "Volumetric Cloud Quality": 0,
+    "Water Quality": 2,
+    "Water Reflections": true
+  },
+  "Interface": {
+    "Scale": 1.0,
+    "Tool Panel Positions": {
+      "Path Tool": "0.6910657 0.731315 0",
+      "Prefab List": "0.8331539 0.731315 0",
+      "Scene Hierarchy Panel": "0.6757833 0.9341974 0",
+      "Terrain Painter": "0.6083333 0.7277778 0",
+      "Terrain Tool": "0.7330463 0.7483444 0",
+      "Transform Tool": "-0.6527468 0.7645602 0"
+    },
+    "Tool Panel Scales": {}
+  },
+  "LOD": {
+    "Distance Multiplier": 1.0
+  },
+  "Password": {
+    "Dump password to file when saving": true,
+    "Hide password field (for streamers)": false
+  },
+  "Paths": {
+    "Brushes": "",
+    "Custom Prefabs": "",
+    "Loot Presets": "",
+    "Prefab Palettes": "",
+    "Rust Install Location": "B:\\SteamLibrary\\steamapps\\common\\Rust\\Bundles\\Bundles",
+    "Stamps": "",
+    "Vending Presets": ""
+  },
+  "PlaceHolders": {
+    "Custom Placeholders": {
+      "assets/prefabs/npc/scientist/patrolpoint.prefab": "Cube"
+    },
+    "Placeholder Colors": {
+      "assets/bundled/prefabs/autospawn/clutter/v2_misc_fireflies/fireflies.prefab": "00AFFF",
+      "assets/bundled/prefabs/autospawn/decor/riversound/river-sound-emitter.prefab": "00AFFF",
+      "assets/bundled/prefabs/modding/spawn_point.prefab": "007F00",
+      "assets/bundled/prefabs/static/chair.invisible.static.prefab": "00AFFF",
+      "assets/content/nature/ambientlife/fireflies/fireflies.prefab": "00AFFF",
+      "assets/content/nature/dunes/pfx sand.prefab": "00AFFF",
+      "assets/prefabs/io/electric/other/alarmsound.prefab": "AA0114",
+      "assets/prefabs/npc/scientist/patrolpoint.prefab": "FF0000"
+    }
+  },
+  "Prefabs": {
+    "Show all prefabs (WARNING: Some prefabs may not work or break the editor/your map)": true
+  },
+  "Time": {
+    "Day": 15,
+    "Hour": 9.0,
+    "Month": 6,
+    "Progress time": true,
+    "Year": 2000
+  },
+  "Translation": {
+    "Language": "English"
+  },
+  "Undo": {
+    "Enable selection undo": true,
+    "Maximum recorded undo steps": 30
+  }
+}
