@@ -9,7 +9,7 @@ This could be bandwidth heavy, it's media streaming afterall. If you don't have 
   
 Shove the mod in your oxide/plugins folder, launch the server to make the config file, kill the server, enter your server IP and second available port in the config, create oxide/media, create folders to represent the custom radios, stuff MP3s in the folders, relaunch the server, use a radio and the custom stations should be auto-added in there.
 
-This is rough right now, wanted to get it out the gate so it could be linux-tested - it's all mono so it should work but still. On windows host for the server there's a socket concurrency limit of 10 (10 max listeners) with no way around it. On linux, I expect it to be higher. It works great at 10 listeners but it could get rough at 100, I have no way to tell
+This is rough right now, wanted to get it out the gate so it could be linux-tested - it's all mono so it should work but still. On windows host for the server there's a socket concurrency limit of 10 (10 max listeners across all stations this makes combined) with no way around it. On linux, I expect it to be higher. It works great at 10 listeners but it could get rough at 100, I have no way to tell
 
 
 PLEASE post an issue if you run into trouble with server logs and screenshot of any player-side errors in their f1 console. TY <3
