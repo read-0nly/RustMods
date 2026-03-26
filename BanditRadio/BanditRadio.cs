@@ -23,7 +23,7 @@ using System.Web ;
 namespace Oxide.Plugins
 {
     [Info("Bandit Radio", "obsol", "0.0.1")]
-    [Description("Exposes folders of MP3s as internet radio endpoints straight from the game server.")]
+    [Description("Exposes folders of MP3s as internet radio endpoints straight from the game server. Now that I know about you guys - go read the readme for the love of god you will have bad time otherwise.")]
     class BanditRadio : CovalencePlugin
     {
 		public static ConfigData config;
