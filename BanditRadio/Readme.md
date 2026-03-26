@@ -15,4 +15,4 @@ This is rough right now, wanted to get it out the gate so it could be linux-test
 PLEASE post an issue if you run into trouble with server logs and screenshot of any player-side errors in their f1 console. TY <3
 
 
-I got stick of having to reload my server just to test code changes so i hammered out the server logic here first as a standalone miniserver windows app if you have a use for that: github.com/read-0nly/MiniRadio
+I got stick of having to reload my server just to test code changes so i hammered out the server logic here first as a standalone miniserver windows app if you have a use for that: [MiniRadio](https://github.com/read-0nly/MiniRadio)
