@@ -17,4 +17,4 @@ I'm working on a way to do server-side NAT traversal to not need that second por
 PLEASE post an issue if you run into trouble with server logs and screenshot of any player-side errors in their f1 console. TY <3
 
 
-I got sick of having to reload my server just to test code changes so i hammered out the server logic here first as a standalone miniserver windows app if you have a use for that: [MiniRadio](https://github.com/read-0nly/MiniRadio)
+I got sick of having to reload my server just to test code changes so i hammered out the server logic here first as a standalone miniserver windows app if you have a use for that (the instructions are mostly the same but that readme was written sober so think of it as like, the translation and editor's notes in that falling-apart copy of shakespeare you read in highschool): [MiniRadio](https://github.com/read-0nly/MiniRadio)
