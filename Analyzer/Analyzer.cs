@@ -20,7 +20,7 @@ using Oxide.Core;
 namespace Oxide.Plugins
 {
 	[Info("Analyzer", "obsol", "0.0.1")]
-	[Description("Allows rewiring of State-Event maps using JSON, and applying that structure to instance/prefab/global")]
+	[Description("This is my throwaway debug plugin - I use it to extract info from the game. You probably shouldn't use this.")]
 	public class Analyzer : CovalencePlugin//
 	{
 		private Game.Rust.Libraries.Player _rustPlayer = Interface.Oxide.GetLibrary<Game.Rust.Libraries.Player>("Player");
