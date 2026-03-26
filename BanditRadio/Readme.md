@@ -1,4 +1,4 @@
-This is a whole fucking Internet Radio server stuffed into an oxide mod babeyyyyyy
+This is a whole fucking bespoke Internet Radio server built out of raw sockets and with a hand-crafter MPEG frame carver stuffed into an oxide mod babeyyyyyy
 
 You need an available second port from which to serve the MP3 audio stream. Your server might not have that, and you also need to know what it is to configure this thing, if you can't find it reach out to your server's support they should be able to help.
 
